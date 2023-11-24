@@ -14,6 +14,8 @@ CREATE TABLE clientes (
     apelido VARCHAR(45) NOT NULL
 );
 
+drop table clientes;
+
 
 CREATE TABLE enderecos_clientes (
 	id_endereco_cliente INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -27,6 +29,7 @@ CREATE TABLE enderecos_clientes (
     fk_cliente INT NOT NULL,
     FOREIGN KEY (fk_cliente) REFERENCES clientes(id_cliente)
 );
+
 
 
 CREATE TABLE contatos_clientes(
