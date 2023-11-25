@@ -2,6 +2,10 @@ CREATE DATABASE SistemaPastelaria;
 
 USE SistemaPastelaria;
 
+DROP DATABASE SistemaPastelaria;
+
+
+
 #  CRIANDO TABELAS #
 
 -- CLIENTE, ENDEREÇO, CONTATO --
@@ -10,12 +14,9 @@ CREATE TABLE clientes (
 	id_cliente INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     cpf VARCHAR(45) NOT NULL,
-    idade INT NOT NULL,
+    data_nascimento DATE NOT NULL,
     apelido VARCHAR(45) NOT NULL
 );
-
-drop table clientes;
-
 
 CREATE TABLE enderecos_clientes (
 	id_endereco_cliente INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -29,7 +30,6 @@ CREATE TABLE enderecos_clientes (
     fk_cliente INT NOT NULL,
     FOREIGN KEY (fk_cliente) REFERENCES clientes(id_cliente)
 );
-
 
 
 CREATE TABLE contatos_clientes(

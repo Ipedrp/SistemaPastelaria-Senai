@@ -6,7 +6,7 @@ DELIMITER $$
 CREATE PROCEDURE cadastrar_cliente (
 	IN nome VARCHAR(100),
 	IN cpf VARCHAR(45),
-    IN idade INT,
+    IN data_nascimento DATE,
     IN apelido VARCHAR(45),
 	IN cidade VARCHAR(100),
     IN uf VARCHAR(10),
@@ -22,8 +22,8 @@ BEGIN
 	DECLARE codigo_cliente INT;
     
     START TRANSACTION;
-    INSERT INTO clientes (nome, cpf, idade, apelido)
-    VALUES (nome, cpf, idade, apelido);
+    INSERT INTO clientes (nome, cpf, data_nascimento, apelido)
+    VALUES (nome, cpf, data_nascimento, apelido);
     
     SET codigo_cliente = LAST_INSERT_ID();
     
@@ -37,5 +37,44 @@ END;
 $$
 DELIMITER ;
 
-drop procedure cadastrar_cliente
+
+# SEGUNDA PROCEDURE PARA INSERIR TIPO DE PAGAMENTO #
+
+
+DELIMITER //
+CREATE PROCEDURE inserir_tipo_pagamento(
+	IN novo_tipo VARCHAR(45)
+    )
+BEGIN
+    -- Inserir um novo tipo de pagamento na tabela
+    INSERT INTO tipos_pagamentos (nome_pagamento) VALUES (novo_tipo);
+END;
+//
+DELIMITER ;
+
+CALL inserir_tipo_pagamento('Cartão Débito');
+
+
+SELECT * FROM tipos_pagamentos;
+
+# TERCEIRA PROCEDURE  PARA INSERIR TIPO DE ENTREGA #
+
+
+DELIMITER //
+CREATE PROCEDURE inserir_tipo_entrega(
+	IN novo_tipo VARCHAR(45),
+    IN ativo CHAR(1)
+    )
+BEGIN
+
+    INSERT INTO tipos_entregas (nome_tipo_entrega, ativo) VALUES (novo_tipo, ativo);
+    
+END;
+//
+DELIMITER ;
+
+CALL inserir_tipo_entrega('Entrega de drone', 'S');
+
+SELECT * FROM tipos_entregas;
+
 
