@@ -19,8 +19,8 @@ SELECT * FROM pedidos;
 
 
 CREATE OR REPLACE VIEW v_etiqueta_delivery
-AS 
-SELECT valor, desconto, nome, id_pedido, data_pedido, fk_tipo_entrega, cidade, 
+AS
+SELECT valor, desconto, nome, id_pedido, data_pedido, fk_tipo_entrega, cidade,
 cep, rua, logradouro, bairro, numero FROM enderecos_clientes
 INNER JOIN clientes ON clientes.id_cliente = enderecos_clientes.fk_cliente
 INNER JOIN pedidos ON pedidos.fk_cliente = enderecos_clientes.fk_cliente
@@ -51,7 +51,7 @@ SELECT * FROM v_pessoa_idosa;
 
 # QUARTA VIEW, CONSULTANDO OS RECHEIOS DISPONÍVEIS#
 
-CREATE OR REPLACE VIEW v_recheios_disponiveis 
+CREATE OR REPLACE VIEW v_recheios_disponiveis
 AS
 SELECT nome_recheio AS nomeRecheio, ativo
 FROM recheios
@@ -134,8 +134,8 @@ SELECT * FROM v_pedidos_finalizados;
 
 CREATE OR REPLACE VIEW v_etiqueta_cozinha
 AS
-SELECT id_pedido, nome_categoria_pastel AS categoria,
-nome_pastel, obs, nome FROM itens_pedidos
+SELECT id_pedido, id_pastel, nome_categoria_pastel AS categoria,
+nome_pastel, obs, nome, id_cliente FROM itens_pedidos
 INNER JOIN pasteis ON pasteis.id_pastel = itens_pedidos.fk_nome_pastel
 INNER JOIN categorias_pasteis ON categorias_pasteis.id_categoria_pastel = pasteis.fk_categoria_pastel
 INNER JOIN pedidos ON pedidos.id_pedido = itens_pedidos.fk_pedido
@@ -170,3 +170,18 @@ JOIN enderecos_clientes e
 ON c.id_cliente = e.fk_cliente;
 
 SELECT * FROM v_consulta_simplificada;
+
+
+
+# DÉCIMA SEGUNDA VIEW, VISUALIZAR PASTEIS MAIS VENDIDOS #
+
+
+CREATE OR REPLACE VIEW v_vendas_pasteis
+AS
+SELECT nome_pastel, count(fk_nome_pastel) as vendas FROM itens_pedidos
+INNER JOIN pasteis ON pasteis.id_pastel = itens_pedidos.fk_nome_pastel
+GROUP BY fk_nome_pastel
+HAVING COUNT(fk_nome_pastel) >= 1
+ORDER BY COUNT(fk_nome_pastel) ASC;
+
+SELECT * FROM v_vendas_pasteis;

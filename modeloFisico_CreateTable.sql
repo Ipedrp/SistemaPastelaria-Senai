@@ -2,9 +2,6 @@ CREATE DATABASE SistemaPastelaria;
 
 USE SistemaPastelaria;
 
-DROP DATABASE SistemaPastelaria;
-
-
 
 #  CRIANDO TABELAS #
 
